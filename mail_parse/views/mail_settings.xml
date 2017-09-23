@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_mail_alias_form_regex" model="ir.ui.view">
+            <field name="name">mail.alias.form.regex</field>
+            <field name="model">mail.alias</field>
+            <field name="inherit_id" ref="mail.view_mail_alias_form"/>
+            <field name="arch" type="xml">
+                <field name="alias_parent_thread_id" position="after">
+                    <separator string="Regex Rules"/>
+                    <field name="alias_regex_ids" widget="one2many_list" nolabel="1" context="{'alias_id': active_id, 'model_id': alias_model_id }" colspan="4">
+                        <tree string="Regex Parsers" domain="['|', ('active', '=', True), ('active', '=', False)]">
+                            <field name="sequence" widget="handle" />
+                            <field name="regex_exp_subject" string="Subject" readonly="1" />
+                            <field name="name" readonly="1" />
+                            <field name="regex_expression" readonly="1" />
+                            <field name="field_id" readonly="1" />
+                            <field name="active" readonly="1" />
+                        </tree>
+                        <form string="Regex">
+                            <div class="oe_title">
+                                <h1 class="o_row">
+                                    <label for="name" style="width: 100%; display: block;">Rule Name</label>
+                                    <field name="name" style="width: 100%!important"  placeholder="Regex name..."/>
+                                </h1>
+                                <h2 class="o_row">
+                                    <label for="regex_expression" style="width: 100%; display: block;">Expression</label>
+                                    <field name="regex_expression" style="width: 100%!important" placeholder="Regex expression..."/>
+                                </h2>
+                                <!--<group>-->
+                                    <!--<field name="regex_on" widget="radio" options="{'horizontal': true}" />-->
+                                    <!--<field name="regex_replace" options="{'horizontal': true}" />-->
+                                <!--</group>-->
+                            </div>
+                            <notebook>
+                                <page string="More Options">
+                                    <group>
+                                        <group string="Options">
+                                            <field name="field_id" domain="[('model_id','=',model_id)]" options="{'no_quick_create': True, 'no_create_edit' : True}" nocreate="1" />
+                                            <field name="model_id" readonly="1" />
+                                            <field name="regex_exp_subject" />
+                                            <field name="match_nth" />
+                                            <field name="active" />
+                                            <field name="alias_id" invisible="1" />
+                                        </group>
+                                        <group string="Flags">
+                                            <field name="re_multiline" />
+                                            <field name="re_dotall"/>
+                                            <field name="re_unicode"/>
+                                            <field name="re_locale"/>
+                                            <field name="re_ignorecase"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page string="Testing">
+                                    <group>
+                                        <field name="test_returned" />
+                                    </group>
+                                    <field name="test_block" />
+                                    <p>Paste a block of text, like an e-mail, to test what your regex will catch.</p>
+                                </page>
+                            </notebook>
+
+                        </form>
+                    </field>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
